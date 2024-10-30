@@ -1,5 +1,8 @@
 'use strict';
 
+/*------------------------------------------------>
+	Utility Functions
+<------------------------------------------------*/
 function select(selector, scope = document) {
 	return scope.querySelector(selector);
 }
@@ -8,7 +11,10 @@ function listen(event, element, callback) {
 	return element.addEventListener(event, callback);
 }
 
-const { log } = console;
+/*------------------------------------------------>
+	Declarations
+<------------------------------------------------*/
+
 const shakenDisplay = select('section');
 const timeDisplay = select('h1');
 const alarmSet = select('span');
@@ -20,6 +26,11 @@ let alarmHour = null;
 let alarmMinute = null;
 const alarmSound = new Audio('./src/media/alarm-clock-short-6402.mp3');
 alarmSound.type = 'audio/mp3';
+
+
+/*------------------------------------------------>
+Validation 
+<------------------------------------------------*/
 
 function validateAlarm() {
 	const alarmHourValue = parseInt(alarmHourInput.value);
@@ -41,9 +52,9 @@ function validateAlarm() {
 	alarmMinuteInput.value = '';
 }
 
-function alarmTrigger() {
-	
-}
+/*------------------------------------------------>
+Display Animation
+<------------------------------------------------*/
 
 function shakeDisplay() {
 			shakenDisplay.classList.add('shake');
@@ -52,12 +63,17 @@ function shakeDisplay() {
 			}, 8000)
 }
 
+/*------------------------------------------------>
+Time Display and Alarm Condition
+<------------------------------------------------*/
+
 function displayTime() {
 	const now = new Date();
 	const currentHour = now.getHours();
 	const currentMinute = now.getMinutes();
 
-	const timeString = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+	const timeString = `${currentHour.toString().padStart(2, '0')
+	}:${currentMinute.toString().padStart(2, '0')}`;
 	timeDisplay.textContent = timeString;
 
 	if (currentHour === alarmHour && currentMinute === alarmMinute) {
@@ -68,6 +84,10 @@ function displayTime() {
 		alarmSet.textContent = "";
 	}
 }
+
+/*------------------------------------------------>
+Internal and Button Listerner
+<------------------------------------------------*/
 
 setInterval(displayTime, 1000);
 
